@@ -1,0 +1,17 @@
+<% @title="Articles" %>
+
+<div class="card">
+  <div class="collection">
+    <% @articles.each do |article| %>
+      <a href="<%= article_path(article) %>" class="collection-item">
+        <%= article.title %>
+      </a>
+    <% end %>
+  </div>
+</div>
+
+<div class="card">
+  <ul class="inline">
+    <li><%= link_to 'New article', new_article_path %></li>
+  </ul>
+</div>

@@ -1,0 +1,9 @@
+<div class="off">
+  <% if not comment.commenter.nil? %>
+    <strong><%= comment.commenter %></strong>
+    <%= comment.body %>
+    <%= link_to '⊝', [comment.article, comment],
+                 method: :delete,
+                 data: { confirm: 'Delete comment?' } %>
+  <% end %>
+</div>
