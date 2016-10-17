@@ -1,6 +1,22 @@
 <% @title="Gift Exchange" %>
 
-<div class="card">
-  <h2>Temporary Blog for Testing</h2>
-  <%= link_to 'My Blog', controller: 'articles' %>
-</div>
+<% if @notfound %>
+  <div class="card" style="color: red;">
+    Group not found
+  </div>
+<% end %>
+
+<%= form_tag search_path, class: "col s12" do %>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Open Group</span>
+      <div class="input-field">
+        <%= label_tag :code %>
+        <%= text_field_tag :code %>
+      </div>
+      <%= submit_tag "Open Group", class: "btn-flat waves-effect waves-light" %>
+    </div>
+  </div>
+<% end %>
+
+<%= render 'welcome/form' %>

@@ -1,0 +1,90 @@
+<% @title=@group.name %>
+
+<div class="card">
+  <div class="card-content">
+    <ul class="inline">
+      <li><%= link_to 'Logout', group_path(@group) %></li>
+      <li><%= link_to 'Delete', group_path(@group, password: @password),
+                method: :delete,
+                data: { confirm: 'Are you sure?' },
+                password: @password %></li>
+      <li><%= link_to 'Randomize', generate_path(@group, password: @password), 
+                method: :post,
+                remote: true %></li>
+    </ul>
+  </div>
+</div>
+
+<div id="error_explanation" class="card" style="color: red;">
+</div>
+
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Edit Group</span><br>
+    <%= form_for @group, remote: true do |f| %>
+      <%= f.hidden_field :password, :value => @password %>
+      <div class="input-field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="input-field">
+        <%= f.label :instructions %>
+        <%= f.text_area :instructions, class: "materialize-textarea", style: "padding-bottom: 12px;" %>
+      </div>
+      <%= f.submit class: "btn-flat waves-effect waves-light" %>
+    <% end %>
+  </div>
+</div>
+
+<div id="error_explanation_person" class="card" style="color: red;">
+</div>
+
+<ul id="people" class="collapsible" data-collapsible="accordion">
+  <li class="collapsible-title"><div class="collapsible-header"><span>Participants</span></div></li>
+  <li class="person">
+    <div class="collapsible-header"><i class="material-icons">mode_edit</i>Add Person</div>
+      <div class="collapsible-body">
+        <%= form_for [@group, Person.new], remote: true do |f| %>
+          <%= f.hidden_field :password, :value => @password %>
+          <div class="input-field">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+          <div class="input-field">
+            <%= f.label :family %>
+            <%= f.text_field :family %>
+          </div>
+          <%= f.label :participating %>
+          <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Off <%= f.check_box :participating %><span class="lever"></span> On</label></div>
+          <%= f.submit class: "btn-flat waves-effect waves-light" %>
+        <% end %>
+    </div>
+  </li>
+  <% @group.people.order('created_at').each do |person| %>
+    <%= render 'people/admin', person: person %>
+  <% end %>
+</ul>
+
+<div id="error_explanation_rule" class="card" style="color: red;">
+</div>
+
+<ul id="rules" class="collapsible" data-collapsible="accordion">
+  <li class="collapsible-title"><div class="collapsible-header"><span>Rules</span></div></li>
+  <li class="rule">
+    <div class="collapsible-header"><i class="material-icons">mode_edit</i>Add Rule</div>
+    <div class="collapsible-body">
+      <%= form_for [@group, Rule.new], remote: true do |f| %>
+        <%= f.hidden_field :password, :value => @password %>
+        <%= f.label :source_match_all %>
+        <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
+        <%= f.label :whitelist_match_all %>
+        <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :whitelist_match_all %><span class="lever"></span> Match All</label></div>
+        You can create the filters after creating the rule<br>
+        <%= f.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+      <% end %>
+    </div>
+  </li>
+  <% @group.rules.order('created_at').each do |rule| %>
+    <%= render 'rules/rule', rule: rule %>
+  <% end %>
+</ul>

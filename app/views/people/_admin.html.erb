@@ -1,0 +1,22 @@
+<li class="person">
+  <div id="person_<%= person.id %>" class="collapsible-header"><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
+  <div class="collapsible-body">
+    <%= form_for [@group, person], remote: true do |f| %>
+      <%= f.hidden_field :password, :value => @password %>
+      Sending to: <p id="person_<%= person.id %>_sending" style="display: inline;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %><%= Person.find(person.giving_to).name %><% end %></p><br>
+      Receiving from: <p id="person_<%= person.id %>_receiving" style="display: inline;"><% if not person.receiving_from.nil? and not Person.find(person.receiving_from).nil? %><%= Person.find(person.receiving_from).name %><% end %></p><br><br>
+      <div class="input-field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="input-field">
+        <%= f.label :family %>
+        <%= f.text_field :family %>
+      </div>
+      <%= f.label :participating %>
+      <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Off <%= f.check_box :participating %><span class="lever"></span> On</label></div>
+      <%= f.submit class: "btn-flat waves-effect waves-light" %>
+      <%= link_to "Delete", group_person_path(@group, person, password: @password), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_person", style: "float: right;" %>
+    <% end %>
+  </div>
+</li>

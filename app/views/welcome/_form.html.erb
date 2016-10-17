@@ -1,0 +1,31 @@
+<%= form_for @group, url: '/', method: 'post', class: "col s12" do |f| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation" class="card" style="color: red;">
+      <ul class="collection with-header">
+        <li class="collection-header">
+          <h4>
+            <%= pluralize(@group.errors.count, "error") %> prohibited this group from being saved:
+          </h4>
+        </li>
+        <% @group.errors.full_messages.each do |msg| %>
+          <li class="collection-item"><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Create Group</span>
+      <div class="input-field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="input-field">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+      </div>
+      <%= f.submit class: "btn-flat waves-effect waves-light" %>
+    </div>
+  </div>
+<% end %>

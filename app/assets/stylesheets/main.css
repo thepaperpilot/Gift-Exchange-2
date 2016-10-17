@@ -1,32 +1,3 @@
-nav {
-    text-align: center;
-    color: #fff;
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
-}
-
-nav a, nav a:visited {
-    color: #fff;
-    font-weight: normal;
-}
-
-nav ul, footer ul {
-    padding: 0;
-    display: inline;
-    font-weight: bold;
-    list-style: none;
-    text-align: center;
-}
-
-nav ul li, footer ul li {
-    display: inline-block;
-    vertical-align: middle;
-    white-space: nowrap;
-    padding-right: 8px;
-    padding-left: 8px;
-}
-
 .inline {
     list-style: none;
     text-align: center;
@@ -49,16 +20,6 @@ footer {
     padding-bottom: 10px;
 }
 
-a, a:visited {
-    color: darkcyan;
-    text-decoration: none;
-}
-
-a:hover, a:focus, a:active {
-    color: darkturquoise !important;
-    outline: 0;
-}
-
 html {
     width:100%;
     height: 100%;
@@ -72,20 +33,6 @@ body {
     margin-bottom: 10px;
 }
 
-.home {
-  height: 64px;
-  max-width: 64px;
-  position: absolute;
-  top: 16px;
-  left: 50%;
-  margin-left: -32px;
-  transition: all .2s ease-in-out;
-}
-
-.home:hover {
-  transform: scale(2);
-}
-
 .head {
     background: #ccc;
     background: linear-gradient(to bottom right, teal, turquoise);
@@ -96,97 +43,12 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-.head h1 {
-    color: #fff;
-    font-size: 2em;
-    width: 90%;
-    max-width: 900px;
-    margin: auto;
-    margin-top: 80px;
-    border-bottom: 1px solid;
-}
-
-.card {
-    background: #fff;
-    border-radius: 2px;
-    width: 90%;
-    max-width: 940px;
-    margin: auto;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    padding: 20px;
-}
-
-.cite {
-    width: 90%;
-    max-width: 940px;
-    margin: auto;
-    position: relative;
-}
-
-.card, .cite {
-    margin-top: 20px;
-}
-
-.cite .card {
-    width: 100%;
-    margin-left: -20px;
-}
-
 table {
     margin: auto;
 }
 
-.card img {
-    margin: auto;
-    display: block;
-    margin: -20px;
-    margin-top: -35px;
-    margin-bottom: -35px;
-    width: calc( 100% + 40px);
-    max-width: unset;
-}
-
-.collection {
-	border-radius:2px;
-	overflow:hidden;
-	position:relative
-}
-
-.collection .collection-item {
-	background-color:#fff;
-	line-height:1.5rem;
-	padding:10px 20px;
-	margin:0;
-	border-bottom:1px solid #e0e0e0
-}
-
-.collection .collection-item:last-child {
-	border-bottom:none
-}
-
-.collection a.collection-item {
-	display:block;
-	transition:.25s;
-	color:#26a69a
-}
-
-.collection a.collection-item:not(.active):hover {
-	background-color:#ddd
-}
-
-input[type=text], textarea {
-    width: 100%;
-    resize: none;
-    box-sizing: border-box;
-    padding: 6px;
-    border-radius: 8px;
-    border: 2px solid rgba(245, 246, 247, 0.996);
-    margin-bottom: 10px;
-}
-
-input[type=text]:focus, textarea:focus {
-    padding: 6px;
-    border: 2px solid rgba(81, 203, 238, 1);
+.inline form {
+    display: inline-block;
 }
 
 .off {
@@ -195,4 +57,63 @@ input[type=text]:focus, textarea:focus {
     margin: auto;
     margin-top: 10px;
     color: gray;
+}
+
+.card {
+    width: 90%;
+    max-width: 940px;
+    margin: auto !important;
+    margin-top: 20px !important;
+}
+
+.btn, .btn-flat {
+    padding: 0 !important;
+}
+
+a.btn, a.btn-flat, input.btn, input.btn-flat {
+    padding: 0 2rem !important;
+}
+
+.waves-effect input[type="button"], .waves-effect input[type="reset"], .waves-effect input[type="submit"] {
+    padding: 0 2rem !important;
+    height: 100% !important;
+}
+
+body > .collapsible, body > .collection {
+    width: 90% !important;
+    max-width:940px !important;
+    margin:auto !important;
+    margin-bottom:20px !important;
+    margin-top: 20px !important;
+}
+
+.collapsible-body {
+    padding: 2rem;
+}
+
+.collapsible-title span, .collection-header {
+    line-height: 48px;
+    font-size: 24px;
+    font-weight: 300;
+    cursor: default;
+}
+
+.collapsible-title div {
+    cursor: default;
+}
+
+.collection-item i {
+    width: 2rem;
+    font-size: 1.6rem;
+    line-height: 3rem;
+    display: block;
+    float: left;
+    text-align: center;
+    margin-right: 1rem;
+    margin-top: -10px;
+}
+
+[type="checkbox"] + label {
+    margin-right: 35px;
+    line-height: unset !important;
 }

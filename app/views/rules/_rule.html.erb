@@ -1,0 +1,126 @@
+<% if not rule.id.nil? %>
+  <li id="<%= @group.id %>_rule_<%= rule.id %>">
+    <div class="collapsible-header"><% if rule.tokens.select {|a| a.type == "source"}.empty? %>Empty Rule<% else %><%= rule.tokens.select {|a| a.type == "source"}[0].token %><p style="display: inline;color: grey;"><% if not rule.tokens.select {|a| a.type == "whitelist"}.empty? %> → <%= rule.tokens.select {|a| a.type == "whitelist"}[0].token %><% end %><% if not rule.tokens.select {|a| a.type == "blacklist"}.empty? %> ↛ <%= rule.tokens.select {|a| a.type == "blacklist"}[0].token %><% end %></p><% end %></div>
+    <div class="collapsible-body">
+      <%= form_for [@group, rule], remote: true do |f| %>
+        <%= f.hidden_field :password, :value => @password %>
+        <h6>Source</h6>
+        <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
+        <div id="<%= rule.id %>_sources" class="collection">
+          <a href="#modal_<%= rule.id %>_add_source" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <% rule.tokens.select {|a| a.type == "source"}.each do |token| %>
+            <%= render 'tokens/token', token: token, rule: rule %>
+          <% end %>
+        </div>
+        <hr>
+        <h6>Whitelist</h6>
+        <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :whitelist_match_all %><span class="lever"></span> Match All</label></div>
+        <div id="<%= rule.id %>_whitelist" class="collection">
+          <a href="#modal_<%= rule.id %>_add_whitelist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <% rule.tokens.select {|a| a.type == "whitelist" }.each do |token| %>
+            <%= render 'tokens/token', token: token, rule: rule %>
+          <% end %>
+        </div>
+        <hr>
+        <h6>Blacklist</h6>
+        <div id="<%= rule.id %>_blacklist" class="collection">
+          <a href="#modal_<%= rule.id %>_add_blacklist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <% rule.tokens.select {|a| a.type == "blacklist" }.each do |token| %>
+            <%= render 'tokens/token', token: token, rule: rule %>
+          <% end %>
+        </div>
+        <%= f.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+        <%= link_to "Delete", group_rule_path(@group, rule, password: @password), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_rule", style: "float: right;margin-top: 2rem;" %>
+      <% end %>
+    </div>
+  </li>
+
+  <div id="<%= rule.id %>_modals">
+    <div id="modal_<%= rule.id %>_add_source" class="modal bottom-sheet">
+      <div class="modal-content">
+        <div id="error_explanation_<%= rule.id %>_source" class="card" style="color: red;"></div>
+        <h4>Source</h4>
+        <%= form_for [@group, rule, Token.new], remote: true do |t| %>
+          <%= t.hidden_field :password, :value => @password %>
+          <%= t.hidden_field :type, value: "source" %>
+          <div class="input-field">
+            <%= t.label :token %>
+            <%= t.text_field :token %>
+          </div>
+          <%= t.check_box :names, id: "names_add_source", class: "filled-in" %>
+          <%= t.label :names, for: "names_add_source" %>
+          <%= t.check_box :groups, id: "family_add_source", class: "filled-in" %>
+          <%= t.label :groups, "Family", for: "family_add_source" %>
+          <%= t.check_box :case, id: "case_add_source", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_add_source" %>
+          <%= t.check_box :regex, id: "regex_add_source", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_add_source" %>
+          <%= t.check_box :invert, id: "invert_add_source", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_add_source" %><br>
+          <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+        <% end %>
+      </div>
+    </div>
+    <% rule.tokens.select {|a| a.type == "source" }.each do |token| %>
+      <%= render 'tokens/source_modal', token: token, rule: rule %>
+    <% end %>
+  </div>
+  <div id="modal_<%= rule.id %>_add_whitelist" class="modal bottom-sheet">
+      <div class="modal-content">
+        <div id="error_explanation_<%= rule.id %>_whitelist" class="card" style="color: red;"></div>
+        <h4>Whitelist</h4>
+        <%= form_for [@group, rule, Token.new], remote: true do |t| %>
+          <%= t.hidden_field :password, :value => @password %>
+          <%= t.hidden_field :type, value: "whitelist" %>
+          <div class="input-field">
+            <%= t.label :token %>
+            <%= t.text_field :token %>
+          </div>
+          <%= t.check_box :names, id: "names_add_whitelist", class: "filled-in" %>
+          <%= t.label :names, for: "names_add_whitelist" %>
+          <%= t.check_box :groups, id: "family_add_whitelist", class: "filled-in" %>
+          <%= t.label :groups, "Family", for: "family_add_whitelist" %>
+          <%= t.check_box :case, id: "case_add_whitelist", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_add_whitelist" %>
+          <%= t.check_box :regex, id: "regex_add_whitelist", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_add_whitelist" %>
+          <%= t.check_box :invert, id: "invert_add_whitelist", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_add_whitelist" %><br>
+          <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+        <% end %>
+      </div>
+    </div>
+    <% rule.tokens.select {|a| a.type == "whitelist" }.each do |token| %>
+      <%= render 'tokens/whitelist_modal', token: token, rule: rule %>
+    <% end %>
+  </div>
+  <div id="modal_<%= rule.id %>_add_blacklist" class="modal bottom-sheet">
+      <div class="modal-content">
+        <div id="error_explanation_<%= rule.id %>_blacklist" class="card" style="color: red;"></div>
+        <h4>Blacklist</h4>
+        <%= form_for [@group, rule, Token.new], remote: true do |t| %>
+          <%= t.hidden_field :password, :value => @password %>
+          <%= t.hidden_field :type, value: "blacklist" %>
+          <div class="input-field">
+            <%= t.label :token %>
+            <%= t.text_field :token %>
+          </div>
+          <%= t.check_box :names, id: "names_add_blacklist", class: "filled-in" %>
+          <%= t.label :names, for: "names_add_blacklist" %>
+          <%= t.check_box :groups, id: "family_add_blacklist", class: "filled-in" %>
+          <%= t.label :groups, "Family", for: "family_add_blacklist" %>
+          <%= t.check_box :case, id: "case_add_blacklist", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_add_blacklist" %>
+          <%= t.check_box :regex, id: "regex_add_blacklist", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_add_blacklist" %>
+          <%= t.check_box :invert, id: "invert_add_blacklist", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_add_blacklist" %><br>
+          <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+        <% end %>
+      </div>
+    </div>
+    <% rule.tokens.select {|a| a.type == "blacklist" }.each do |token| %>
+      <%= render 'tokens/blacklist_modal', token: token, rule: rule %>
+    <% end %>
+  </div>
+<% end %>

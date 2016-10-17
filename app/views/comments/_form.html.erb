@@ -1,8 +1,0 @@
-<div class="card">
-  <strong style="margin-bottom: 10px;display: block;">Post comment</strong>
-  <%= form_for([@article, @article.comments.build]) do |f| %>
-    <%= f.text_field :commenter, placeholder: "Name" %>
-    <%= f.text_area :body, placeholder: "Comment" %>
-    <%= f.submit %>
-  <% end %>
-</div>

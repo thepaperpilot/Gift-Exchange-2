@@ -10,22 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005210913) do
+ActiveRecord::Schema.define(version: 20161008173359) do
 
-  create_table "articles", force: :cascade do |t|
-    t.string   "title"
-    t.text     "text"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "groups", force: :cascade do |t|
+    t.string   "name"
+    t.string   "code"
+    t.string   "instructions",    default: "To join the group, type your name in the form below and click 'Join Group'. After the gift exchanges are generated you'll be able to look up who you are giving to and receiving from through this link. You can also share this link with others so they can join the group as well."
+    t.string   "password_digest"
+    t.datetime "created_at",                                                                                                                                                                                                                                                                                                        null: false
+    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                        null: false
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.string   "commenter"
-    t.text     "body"
-    t.integer  "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_comments_on_article_id"
+  create_table "people", force: :cascade do |t|
+    t.string   "name"
+    t.string   "family"
+    t.boolean  "participating",  default: true
+    t.integer  "giving_to"
+    t.integer  "receiving_from"
+    t.integer  "group_id"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["group_id"], name: "index_people_on_group_id"
+  end
+
+  create_table "rules", force: :cascade do |t|
+    t.boolean  "source_match_all"
+    t.boolean  "whitelist_match_all"
+    t.integer  "group_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["group_id"], name: "index_rules_on_group_id"
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.string   "token"
+    t.string   "type"
+    t.boolean  "names",      default: true
+    t.boolean  "groups"
+    t.boolean  "case"
+    t.boolean  "regex"
+    t.boolean  "invert"
+    t.integer  "rule_id"
+    t.integer  "group_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["group_id"], name: "index_tokens_on_group_id"
+    t.index ["rule_id"], name: "index_tokens_on_rule_id"
   end
 
 end

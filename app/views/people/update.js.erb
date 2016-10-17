@@ -1,0 +1,15 @@
+<% if @person.errors.any? %>
+  $("#error_explanation_person").html('<ul class="collection with-header"><li class="collection-header"><h4><%= j pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h4></li><% @person.errors.full_messages.each do |msg| %><li class="collection-item"><%= j msg %></li><% end %></ul>');
+<% else %>
+  $("#error_explanation_person").html('');
+  $("#person_<%= @person.id %>").html('<%= @person.name %><p id="person_<%= @person.id %>_sending_header" style="display: inline;color: grey;"><% if not @person.giving_to.nil? and not Person.find(@person.giving_to).nil? %> ⇒ <%= Person.find(@person.giving_to).name %><% end %></p>')
+  <% if not @person.receiving_from.nil? and not Person.find(@person.receiving_from).nil? %>
+    <% person = Person.find(@person.receiving_from) %>
+    $("#person_<%= person.id %>").html('<%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p>')
+    $("#person_<%= person.id %>_sending").text('<% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %><%= Person.find(person.giving_to).name %><% end %>')
+  <% end %>
+  <% if not @person.giving_to.nil? and not Person.find(@person.giving_to).nil? %>
+    <% person = Person.find(@person.giving_to) %>
+    $("#person_<%= person.id %>_receiving").text('<% if not person.receiving_from.nil? and not Person.find(person.receiving_from).nil? %><%= Person.find(person.receiving_from).name %><% end %>')
+  <% end %>
+<% end %>

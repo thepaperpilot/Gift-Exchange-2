@@ -1,0 +1,28 @@
+<% if not token.id.nil? %>
+  <div id="modal_<%= rule.id %>_<%= token.id %>" class="modal bottom-sheet">
+      <div class="modal-content">
+        <div id="error_explanation_<%= rule.id %>_<%= token.id %>" class="card" style="color: red;"></div>
+        <h4>Blacklist</h4>
+        <%= form_for [@group, rule, token], remote: true do |t| %>
+          <%= t.hidden_field :password, :value => @password %>
+          <%= t.hidden_field :type, value: "blacklist" %>
+          <div class="input-field">
+            <%= t.label :token %>
+            <%= t.text_field :token %>
+          </div>
+          <%= t.check_box :names, id: "names_#{token.id}", class: "filled-in" %>
+          <%= t.label :names, for: "names_#{token.id}" %>
+          <%= t.check_box :groups, id: "family_#{token.id}", class: "filled-in" %>
+          <%= t.label :groups, "Family", for: "family_#{token.id}" %>
+          <%= t.check_box :case, id: "case_#{token.id}", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_#{token.id}" %>
+          <%= t.check_box :regex, id: "regex_#{token.id}", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_#{token.id}" %>
+          <%= t.check_box :invert, id: "invert_#{token.id}", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_#{token.id}" %><br>
+          <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
+          <%= link_to "Delete", group_rule_token_path(@group, rule, token, password: @password), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_token", style: "float: right;margin-top: 2rem;" %>
+        <% end %>
+      </div>
+    </div>
+<% end %>

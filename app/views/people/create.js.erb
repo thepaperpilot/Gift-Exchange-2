@@ -1,0 +1,7 @@
+<% if @person.errors.any? %>
+  $("#error_explanation").html('<ul class="collection with-header"><li class="collection-header"><h4><%= j pluralize(@person.errors.count, "error") %> prohibited this person from being saved:</h4></li><% @person.errors.full_messages.each do |msg| %><li class="collection-item"><%= j msg %></li><% end %></ul>');
+<% else %>
+  $("#error_explanation").html('');
+  $("#people").append("<%= j (render @person) %>")
+  $("#new_person").find(":input[type=text]").val("");
+<% end %>

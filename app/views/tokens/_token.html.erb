@@ -1,0 +1,7 @@
+<a id="link_<%= rule.id %>_<%= token.id %>" href="#modal_<%= rule.id %>_<%= token.id %>" class="collection-item modal-trigger">
+  <% if token.token == "" %>
+    Empty Rule
+  <% else %>
+    <%= token.token %>
+  <% end %>
+</a>

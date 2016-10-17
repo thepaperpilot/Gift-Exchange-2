@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title><%= @title %></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
   <body>
-  	<%= stylesheet_link_tag "main.css" %>
 	<div class="head">
-	  <h1><%= @title %></h1> 
+	  <h1 class="page-title white-text"><%= @title %></h1> 
 	</div>
 
     <%= yield %>
   </body>
+
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </html>
