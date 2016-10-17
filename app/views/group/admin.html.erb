@@ -11,6 +11,9 @@
       <li><%= link_to 'Randomize', generate_path(@group, password: @password), 
                 method: :post,
                 remote: true %></li>
+      <li><%= link_to 'Clear', clear_path(@group, password: @password), 
+                method: :post,
+                remote: true %></li>
     </ul>
   </div>
 </div>

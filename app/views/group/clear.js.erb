@@ -1,0 +1,5 @@
+<% @group.people.each do |person| %>
+$("#person_<%= person.id %>_sending_header").text("");
+$("#person_<%= person.id %>_sending").text("");
+$("#person_<%= person.id %>_receiving").text("");
+<% end %>

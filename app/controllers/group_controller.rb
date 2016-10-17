@@ -82,6 +82,15 @@ class GroupController < ApplicationController
     participants.each(&:save)
   end
 
+  def clear
+    @group = Group.find_by(code: params[:code])
+
+    return unless @group && @group.authenticate(params[:password])
+
+    @group.people.each { |p| p.giving_to = p.receiving_from = nil }
+    @group.people.each(&:save)
+  end
+
   def create
     @group = Group.new(group_params)
 

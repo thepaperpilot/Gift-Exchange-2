@@ -14,5 +14,6 @@ Rails.application.routes.draw do
   post '/' => 'group#create'
   post '/group/:code/admin', to: 'group#admin', as: 'admin'
   post '/group/:code/generate', to: 'group#randomize', as: 'generate'
+  post '/group/:code/clear', to: 'group#clear', as: 'clear'
   get '/group/:code/admin', to: 'group#show'
 end
