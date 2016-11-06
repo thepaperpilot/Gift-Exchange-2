@@ -8,7 +8,7 @@
                 method: :delete,
                 data: { confirm: 'Are you sure?' },
                 password: @password %></li>
-      <li><%= link_to 'Randomize', generate_path(@group, password: @password), 
+      <li><%= link_to 'Draw Names', generate_path(@group, password: @password), 
                 method: :post,
                 remote: true %></li>
       <li><%= link_to 'Clear', clear_path(@group, password: @password), 
