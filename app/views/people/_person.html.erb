@@ -1,6 +1,6 @@
 <% if not person.id.nil? %>
   <li>
-    <div class="collapsible-header"><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
+    <div class="collapsible-header"><i class="material-icons">face</i><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
     <div class="collapsible-body">
       Sending to: <p id="person_<%= person.id %>_sending" style="display: inline;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %><%= Person.find(person.giving_to).name %><% end %></p><br>
       Receiving from: <p id="person_<%= person.id %>_receiving" style="display: inline;"><% if not person.receiving_from.nil? and not Person.find(person.receiving_from).nil? %><%= Person.find(person.receiving_from).name %><% end %></p>
