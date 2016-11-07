@@ -34,11 +34,12 @@ ActiveRecord::Schema.define(version: 20161008173359) do
   end
 
   create_table "rules", force: :cascade do |t|
+    t.string   "name",                default: "New Rule"
     t.boolean  "source_match_all"
     t.boolean  "whitelist_match_all"
     t.integer  "group_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.index ["group_id"], name: "index_rules_on_group_id"
   end
 

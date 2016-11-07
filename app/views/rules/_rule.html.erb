@@ -1,9 +1,13 @@
 <% if not rule.id.nil? %>
   <li id="<%= @group.id %>_rule_<%= rule.id %>">
-    <div class="collapsible-header"><% if rule.tokens.select {|a| a.type == "source"}.empty? %>Empty Rule<% else %><%= rule.tokens.select {|a| a.type == "source"}[0].token %><p style="display: inline;color: grey;"><% if not rule.tokens.select {|a| a.type == "whitelist"}.empty? %> → <%= rule.tokens.select {|a| a.type == "whitelist"}[0].token %><% end %><% if not rule.tokens.select {|a| a.type == "blacklist"}.empty? %> ↛ <%= rule.tokens.select {|a| a.type == "blacklist"}[0].token %><% end %></p><% end %></div>
+    <div class="collapsible-header"><%= rule.name %></div>
     <div class="collapsible-body">
       <%= form_for [@group, rule], remote: true do |f| %>
         <%= f.hidden_field :password, :value => @password %>
+        <div class="input-field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
         <h6>Source</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
         <div id="<%= rule.id %>_sources" class="collection">

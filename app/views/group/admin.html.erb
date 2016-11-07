@@ -78,6 +78,10 @@
     <div class="collapsible-body">
       <%= form_for [@group, Rule.new], remote: true do |f| %>
         <%= f.hidden_field :password, :value => @password %>
+        <div class="input-field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
         <%= f.label :source_match_all %>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
         <%= f.label :whitelist_match_all %>
