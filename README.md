@@ -2,7 +2,6 @@
 
 - *Error message when generating people fails*
 - Allow people to add tokens to rules before creating rule
-- Rename tokens to filters (client facing only)
 - Add option to lock values before generating
 - More secure password handling
 - Instructions on how to share the link with others

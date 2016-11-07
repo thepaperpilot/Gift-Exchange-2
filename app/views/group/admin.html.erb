@@ -82,9 +82,9 @@
           <%= f.label :name %>
           <%= f.text_field :name %>
         </div>
-        <%= f.label :source_match_all %>
+        <h6>Source</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
-        <%= f.label :whitelist_match_all %>
+        <h6>Whitelist</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :whitelist_match_all %><span class="lever"></span> Match All</label></div>
         You can create the filters after creating the rule<br>
         <%= f.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>

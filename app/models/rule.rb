@@ -16,8 +16,7 @@ class Rule < ApplicationRecord
         return false
       end
     end
-
-    puts "source: source_match_all: #{source_match_all}"
+    
     source_match_all
   end
 

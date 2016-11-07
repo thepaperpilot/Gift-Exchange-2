@@ -11,7 +11,7 @@
         <h6>Source</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
         <div id="<%= rule.id %>_sources" class="collection">
-          <a href="#modal_<%= rule.id %>_add_source" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <a href="#modal_<%= rule.id %>_add_source" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "source"}.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>
@@ -20,7 +20,7 @@
         <h6>Whitelist</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :whitelist_match_all %><span class="lever"></span> Match All</label></div>
         <div id="<%= rule.id %>_whitelist" class="collection">
-          <a href="#modal_<%= rule.id %>_add_whitelist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <a href="#modal_<%= rule.id %>_add_whitelist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "whitelist" }.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>
@@ -28,7 +28,7 @@
         <hr>
         <h6>Blacklist</h6>
         <div id="<%= rule.id %>_blacklist" class="collection">
-          <a href="#modal_<%= rule.id %>_add_blacklist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Token</a>
+          <a href="#modal_<%= rule.id %>_add_blacklist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "blacklist" }.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>

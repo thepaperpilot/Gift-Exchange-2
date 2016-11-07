@@ -7,7 +7,7 @@
           <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "source" %>
           <div class="input-field">
-            <%= t.label :token %>
+            <%= t.label :token, "Filter" %>
             <%= t.text_field :token %>
           </div>
           <%= t.check_box :names, id: "names_#{token.id}", class: "filled-in" %>

@@ -51,6 +51,8 @@ class GroupController < ApplicationController
       end
     end
 
+    priority = priority.uniq
+
     priority.each do |person|
       receptors = participants_undone.dup - [person]
       person.apply_rules(receptors, @group.rules)
@@ -63,7 +65,8 @@ class GroupController < ApplicationController
       participants_undone -= [receptor]
     end
 
-    (participants - priority).each do |person|
+    (participants).each do |person|
+      next if person.giving_to != nil
       receptors = participants_undone.dup - [person]
       unless person.receiving_from.nil?
         receptors -= [Person.find(person.receiving_from)]
