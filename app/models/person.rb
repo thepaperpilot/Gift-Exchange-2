@@ -3,9 +3,10 @@ class Person < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
 
   def apply_rules(people, rules)
-    puts "before: #{people.inspect()}"
-    puts people.size
-    people.delete_if { |person| rules.any? { |rule| rule.check_source(self) && !rule.check_rule(person) } }
-    puts "after: #{people.inspect()}"
+  	rules.each { |rule|
+  		if people.reject { |person| rule.check_source(self) && !rule.check_rule(person) }.length >= 1
+  			people.reject! { |person| rule.check_source(self) && !rule.check_rule(person) }
+  		end
+  	}
   end
 end

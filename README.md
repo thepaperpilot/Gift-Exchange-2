@@ -2,7 +2,6 @@
 
 - *Error message when generating people fails*
 - Allow people to add tokens to rules before creating rule
-- If a participant can't find a recipient that matches all rules, it disregards all of them. Instead it should go down the list of rules and choose the last state it can where there is at least one valid recipient.
 - Add option to lock values before generating
 - More secure password handling
 - Instructions on how to share the link with others
