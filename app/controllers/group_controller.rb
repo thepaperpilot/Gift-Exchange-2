@@ -55,10 +55,10 @@ class GroupController < ApplicationController
 
     priority.each do |person|
       receptors = participants_undone.dup - [person]
-      person.apply_rules(receptors, @group.rules)
       unless person.receiving_from.nil?
         receptors -= [Person.find(person.receiving_from)]
       end
+      person.apply_rules(receptors, @group.rules)
       
       next if receptors.empty?
       receptor = receptors.sample
@@ -71,7 +71,7 @@ class GroupController < ApplicationController
     (participants).each do |person|
       next if person.giving_to != nil
       receptors = participants_undone.dup - [person]
-      unless person.receiving_from.nil?
+      if !person.receiving_from.nil? && (receptors - [Person.find(person.receiving_from)]).length != 0
         receptors -= [Person.find(person.receiving_from)]
       end
       receptor = receptors.sample
