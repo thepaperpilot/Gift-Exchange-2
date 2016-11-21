@@ -4,5 +4,4 @@
   $("#error_explanation_<%= @rule.id %>_<%= @token.id %>").html('');
   $("#link_<%= @rule.id %>_<%= @token.id %>").text("<% if @token.token == "" %>Empty Rule<% else %><%= @token.token %><% end %>");
   $("#modal_<%= @rule.id %>_<%= @token.id %>").closeModal();
-  $("#<%= @group.id %>_rule_<%= @rule.id %> .collapsible-header").html('<% if @rule.tokens.select {|a| a.type == "source"}.empty? %>Empty Rule<% else %><%= @rule.tokens.select {|a| a.type == "source"}[0].token %><p style="display: inline;color: grey;"><% if not @rule.tokens.select {|a| a.type == "whitelist"}.empty? %> → <%= @rule.tokens.select {|a| a.type == "whitelist"}[0].token %><% end %><% if not @rule.tokens.select {|a| a.type == "blacklist"}.empty? %> ↛ <%= @rule.tokens.select {|a| a.type == "blacklist"}[0].token %><% end %></p><% end %>');
 <% end %>
