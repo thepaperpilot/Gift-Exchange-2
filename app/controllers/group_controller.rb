@@ -36,13 +36,16 @@ class GroupController < ApplicationController
 
     return unless @group && @group.authenticate(params[:password])
 
-    participants = Person.where(group_id: @group.id, participating: true)
-    participants_undone = participants.dup
+    people = Person.where(group_id: @group.id)
 
-    participants.each do |person|
+    people.each do |person|
       person.giving_to = nil
       person.receiving_from = nil
     end
+
+    people.each(&:save)
+    participants = people.where(participating: true)
+    participants_undone = participants.dup
 
     priority = []
     @group.rules.each do |rule|
