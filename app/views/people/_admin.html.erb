@@ -1,5 +1,5 @@
 <li class="person">
-  <div id="person_<%= person.id %>" class="collapsible-header"><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
+  <div id="person_<%= person.id %>" class="collapsible-header"><i class="material-icons">face</i><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
   <div class="collapsible-body">
     <%= form_for [@group, person], remote: true do |f| %>
       <%= f.hidden_field :password, :value => @password %>

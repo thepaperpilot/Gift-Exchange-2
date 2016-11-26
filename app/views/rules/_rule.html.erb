@@ -11,7 +11,7 @@
         <h6>Source</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :source_match_all %><span class="lever"></span> Match All</label></div>
         <div id="<%= rule.id %>_sources" class="collection">
-          <a href="#modal_<%= rule.id %>_add_source" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
+          <a href="#modal<%= rule.id %>_add_source" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "source"}.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>
@@ -20,7 +20,7 @@
         <h6>Whitelist</h6>
         <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Match Any <%= f.check_box :whitelist_match_all %><span class="lever"></span> Match All</label></div>
         <div id="<%= rule.id %>_whitelist" class="collection">
-          <a href="#modal_<%= rule.id %>_add_whitelist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
+          <a href="#modal<%= rule.id %>_add_whitelist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "whitelist" }.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>
@@ -28,7 +28,7 @@
         <hr>
         <h6>Blacklist</h6>
         <div id="<%= rule.id %>_blacklist" class="collection">
-          <a href="#modal_<%= rule.id %>_add_blacklist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
+          <a href="#modal<%= rule.id %>_add_blacklist" class="collection-item modal-trigger"><i class="material-icons">mode_edit</i>Add Filter</a>
           <% rule.tokens.select {|a| a.type == "blacklist" }.each do |token| %>
             <%= render 'tokens/token', token: token, rule: rule %>
           <% end %>
@@ -40,7 +40,7 @@
   </li>
 
   <div id="<%= rule.id %>_modals">
-    <div id="modal_<%= rule.id %>_add_source" class="modal bottom-sheet">
+    <div id="modal<%= rule.id %>_add_source" class="modal bottom-sheet">
       <div class="modal-content">
         <div id="error_explanation_<%= rule.id %>_source" class="card" style="color: red;"></div>
         <h4>Source</h4>
@@ -48,19 +48,19 @@
           <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "source" %>
           <div class="input-field">
-            <%= t.label :token %>
+            <%= t.label :token, "Filter" %>
             <%= t.text_field :token %>
           </div>
-          <%= t.check_box :names, id: "names_add_source", class: "filled-in" %>
-          <%= t.label :names, for: "names_add_source" %>
-          <%= t.check_box :groups, id: "family_add_source", class: "filled-in" %>
-          <%= t.label :groups, "Family", for: "family_add_source" %>
-          <%= t.check_box :case, id: "case_add_source", class: "filled-in" %>
-          <%= t.label :case, "Case Sensitive", for: "case_add_source" %>
-          <%= t.check_box :regex, id: "regex_add_source", class: "filled-in" %>
-          <%= t.label :regex, "Parse RegEx", for: "regex_add_source" %>
-          <%= t.check_box :invert, id: "invert_add_source", class: "filled-in" %>
-          <%= t.label :invert, for: "invert_add_source" %><br>
+          <%= t.check_box :names, id: "names_#{rule.id}_add_source", class: "filled-in" %>
+          <%= t.label :names, for: "names_#{rule.id}_add_source" %>
+          <%= t.check_box :groups, id: "family_#{rule.id}_add_source", class: "filled-in" %>
+          <%= t.label :groups, "Class", for: "family_#{rule.id}_add_source" %>
+          <%= t.check_box :case, id: "case_#{rule.id}_add_source", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_#{rule.id}_add_source" %>
+          <%= t.check_box :regex, id: "regex_#{rule.id}_add_source", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_#{rule.id}_add_source" %>
+          <%= t.check_box :invert, id: "invert_#{rule.id}_add_source", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_#{rule.id}_add_source" %><br>
           <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
         <% end %>
       </div>
@@ -69,7 +69,7 @@
       <%= render 'tokens/source_modal', token: token, rule: rule %>
     <% end %>
   </div>
-  <div id="modal_<%= rule.id %>_add_whitelist" class="modal bottom-sheet">
+  <div id="modal<%= rule.id %>_add_whitelist" class="modal bottom-sheet">
       <div class="modal-content">
         <div id="error_explanation_<%= rule.id %>_whitelist" class="card" style="color: red;"></div>
         <h4>Whitelist</h4>
@@ -77,19 +77,19 @@
           <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "whitelist" %>
           <div class="input-field">
-            <%= t.label :token %>
+            <%= t.label :token, "Filter" %>
             <%= t.text_field :token %>
           </div>
-          <%= t.check_box :names, id: "names_add_whitelist", class: "filled-in" %>
-          <%= t.label :names, for: "names_add_whitelist" %>
-          <%= t.check_box :groups, id: "family_add_whitelist", class: "filled-in" %>
-          <%= t.label :groups, "Family", for: "family_add_whitelist" %>
-          <%= t.check_box :case, id: "case_add_whitelist", class: "filled-in" %>
-          <%= t.label :case, "Case Sensitive", for: "case_add_whitelist" %>
-          <%= t.check_box :regex, id: "regex_add_whitelist", class: "filled-in" %>
-          <%= t.label :regex, "Parse RegEx", for: "regex_add_whitelist" %>
-          <%= t.check_box :invert, id: "invert_add_whitelist", class: "filled-in" %>
-          <%= t.label :invert, for: "invert_add_whitelist" %><br>
+          <%= t.check_box :names, id: "names_#{rule.id}_add_whitelist", class: "filled-in" %>
+          <%= t.label :names, for: "names_#{rule.id}_add_whitelist" %>
+          <%= t.check_box :groups, id: "family_#{rule.id}_add_whitelist", class: "filled-in" %>
+          <%= t.label :groups, "Class", for: "family_#{rule.id}_add_whitelist" %>
+          <%= t.check_box :case, id: "case_#{rule.id}_add_whitelist", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_#{rule.id}_add_whitelist" %>
+          <%= t.check_box :regex, id: "regex_#{rule.id}_add_whitelist", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_#{rule.id}_add_whitelist" %>
+          <%= t.check_box :invert, id: "invert_#{rule.id}_add_whitelist", class: "filled-in" %>
+          <%= t.label :invert, for: "invert_#{rule.id}_add_whitelist" %><br>
           <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
         <% end %>
       </div>
@@ -98,7 +98,7 @@
       <%= render 'tokens/whitelist_modal', token: token, rule: rule %>
     <% end %>
   </div>
-  <div id="modal_<%= rule.id %>_add_blacklist" class="modal bottom-sheet">
+  <div id="modal<%= rule.id %>_add_blacklist" class="modal bottom-sheet">
       <div class="modal-content">
         <div id="error_explanation_<%= rule.id %>_blacklist" class="card" style="color: red;"></div>
         <h4>Blacklist</h4>
@@ -106,18 +106,18 @@
           <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "blacklist" %>
           <div class="input-field">
-            <%= t.label :token %>
+            <%= t.label :token, "Filter" %>
             <%= t.text_field :token %>
           </div>
-          <%= t.check_box :names, id: "names_add_blacklist", class: "filled-in" %>
-          <%= t.label :names, for: "names_add_blacklist" %>
-          <%= t.check_box :groups, id: "family_add_blacklist", class: "filled-in" %>
-          <%= t.label :groups, "Family", for: "family_add_blacklist" %>
-          <%= t.check_box :case, id: "case_add_blacklist", class: "filled-in" %>
-          <%= t.label :case, "Case Sensitive", for: "case_add_blacklist" %>
-          <%= t.check_box :regex, id: "regex_add_blacklist", class: "filled-in" %>
-          <%= t.label :regex, "Parse RegEx", for: "regex_add_blacklist" %>
-          <%= t.check_box :invert, id: "invert_add_blacklist", class: "filled-in" %>
+          <%= t.check_box :names, id: "names_#{rule.id}_add_blacklist", class: "filled-in" %>
+          <%= t.label :names, for: "names_#{rule.id}_add_blacklist" %>
+          <%= t.check_box :groups, id: "family_#{rule.id}_add_blacklist", class: "filled-in" %>
+          <%= t.label :groups, "Class", for: "family_#{rule.id}_add_blacklist" %>
+          <%= t.check_box :case, id: "case_#{rule.id}_add_blacklist", class: "filled-in" %>
+          <%= t.label :case, "Case Sensitive", for: "case_#{rule.id}_add_blacklist" %>
+          <%= t.check_box :regex, id: "regex_#{rule.id}_add_blacklist", class: "filled-in" %>
+          <%= t.label :regex, "Parse RegEx", for: "regex_#{rule.id}_add_blacklist" %>
+          <%= t.check_box :invert, id: "invert_#{rule.id}_add_blacklist", class: "filled-in" %>
           <%= t.label :invert, for: "invert_add_blacklist" %><br>
           <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
         <% end %>

@@ -9,10 +9,8 @@ class Rule < ApplicationRecord
 
     sources.each do |token|
       if token.check(person)
-        puts "source: true"
         return true unless source_match_all
       elsif source_match_all
-        puts "source: false"
         return false
       end
     end

@@ -3,6 +3,8 @@
 <% else %>
   $("#error_explanation_rule").html('');
   $("#rules").append("<%= escape_javascript(render 'rules/rule', rule: @rule) %>");
+  $("#new_rule").find(":input[type=text]").val("");
   Materialize.updateTextFields();
   $('.modal-trigger').leanModal();
+  $('#<%= @group.id %>_rule_<%= @rule.id %> .collapsible-header').click();
 <% end %>
