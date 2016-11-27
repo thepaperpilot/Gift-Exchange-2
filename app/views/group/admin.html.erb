@@ -34,6 +34,8 @@
         <%= f.label :instructions %>
         <%= f.text_area :instructions, class: "materialize-textarea", style: "padding-bottom: 12px;" %>
       </div>
+      <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Closed to Submissions <%= f.check_box :open %><span class="lever"></span> Open to Submissions</label></div>
+      <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Hide who gives to whom <%= f.check_box :public %><span class="lever"></span> Show who gives to whom</label></div>
       <%= f.submit class: "btn-flat waves-effect waves-light" %>
     <% end %>
   </div>

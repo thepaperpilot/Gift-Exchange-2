@@ -1,13 +1,16 @@
 class PeopleController < ApplicationController
   def create
     @group = Group.find_by(code: params[:group_code])
-    @person = @group.people.create(person_params)
 
     if @group.authenticate(params[:person][:password])
+      @person = @group.people.create(person_params)
+      
       @password = params[:person][:password]
       respond_to do |format|
         format.js { render file: 'people/admin.js.erb' }
       end
+    elsif @group.open?
+      @person = @group.people.create(person_params_restricted)
     end
   end
 
@@ -35,5 +38,9 @@ class PeopleController < ApplicationController
 
   def person_params
     params.require(:person).permit(:name, :family, :participating)
+  end
+
+  def person_params_restricted
+    params.require(:person).permit(:name)
   end
 end

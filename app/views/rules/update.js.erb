@@ -2,5 +2,5 @@
   $("#error_explanation_rule").html('<ul class="collection with-header"><li class="collection-header"><h4><%= j pluralize(@rule.errors.count, "error") %> prohibited this rule from being saved:</h4></li><% @rule.errors.full_messages.each do |msg| %><li class="collection-item"><%= j msg %></li><% end %></ul>');
 <% else %>
   $("#error_explanation_rule").html('');
-  $("#<%= @group.id %>_rule_<%= @rule.id %>").find(".collapsible-header").html('<%= @rule.name %>');
+  $("#<%= @group.id %>_rule_<%= @rule.id %>").find(".collapsible-header").html('<i class="material-icons">subject</i><%= @rule.name %>');
 <% end %>

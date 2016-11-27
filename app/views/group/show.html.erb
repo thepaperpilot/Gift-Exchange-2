@@ -12,10 +12,17 @@
 
 <%= render 'people/form' %>
 
-<ul id="people" class="collapsible" data-collapsible="accordion">
-  <li class="collapsible-title"><div class="collapsible-header"><span>Participants</span></div></li>
-  <%= render @group.people %>
-</ul>
+<% if @group.public? %>
+  <ul id="people" class="collapsible" data-collapsible="accordion">
+    <li class="collapsible-title"><div class="collapsible-header"><span>Participants</span></div></li>
+    <%= render @group.people %>
+  </ul>
+<% else %>
+  <ul id="people" class="collection with-header">
+    <li class="collection-header">Participants</li>
+    <%= render @group.people %>
+  </ul>
+<% end %>
 
 <% if not @auth %>
   <div id="error_explanation" class="card" style="color: red;">
