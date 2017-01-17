@@ -43,7 +43,7 @@ class TokensController < ApplicationController
 
   private
 
-  def token_params
-    params.require(:token).permit(:token, :names, :groups, :case, :regex, :invert, :type)
-  end
+    def token_params
+      params.require(:token).permit(:token, :names, :groups, :case, :regex, :invert, :type)
+    end
 end

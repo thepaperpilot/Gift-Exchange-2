@@ -10,17 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161008173359) do
+ActiveRecord::Schema.define(version: 20170116215027) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.string   "code"
-    t.string   "instructions",    default: "To join the group, type your name in the form below and click 'Join Group'. After the gift exchanges are generated you'll be able to look up who you are giving to and receiving from through this link. You can also share this link with others so they can join the group as well."
-    t.string   "password_digest"
-    t.boolean  "open",            default: true
-    t.boolean  "public",          default: true
-    t.datetime "created_at",                                                                                                                                                                                                                                                                                                        null: false
-    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                        null: false
+    t.string   "instructions", default: "To join the group, type your name in the form below and click 'Join Group'. After the gift exchanges are generated you'll be able to look up who you are giving to and receiving from through this link. You can also share this link with others so they can join the group as well."
+    t.boolean  "open",         default: true
+    t.boolean  "public",       default: true
+    t.datetime "created_at",                                                                                                                                                                                                                                                                                                     null: false
+    t.datetime "updated_at",                                                                                                                                                                                                                                                                                                     null: false
   end
 
   create_table "people", force: :cascade do |t|
@@ -59,6 +58,14 @@ ActiveRecord::Schema.define(version: 20161008173359) do
     t.datetime "updated_at",                null: false
     t.index ["group_id"], name: "index_tokens_on_group_id"
     t.index ["rule_id"], name: "index_tokens_on_rule_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end

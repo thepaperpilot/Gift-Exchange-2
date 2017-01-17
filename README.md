@@ -1,4 +1,8 @@
-# todo
+# Name Draw
+
+A web app for co-ordinating group gift exchanges allowing for a variety of situations including secret santas or complex rules involving restricting who can give gifts to whom.
+
+## todo
 
 - *Error message when generating people fails*
 - Allow people to add tokens to rules before creating rule

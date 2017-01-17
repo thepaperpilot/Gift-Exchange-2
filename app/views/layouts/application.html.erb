@@ -6,16 +6,41 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
 
   <body>
-	<div class="head">
-	  <h1 class="page-title white-text"><%= @title %></h1> 
-	</div>
+  	<div class="head">
+      <nav class="cyan darken-2">
+        <div class="nav-wrapper">
+          <a href="<%= root_path %>" class="brand-logo">Name Draw</a>
+          <ul id="nav-mobile" class="right">
+            <% if logged_in? %>
+              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Log Out", logout_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to "Sign Up", signup_path %></li>
+              <li><%= link_to "Log In", login_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+      <h1 class="page-title white-text">
+        <%= @icon %>
+        <%= @title %>
+      </h1>
+  	</div>
+
+    <% flash.each do |message_type, message| %>
+      <script type="text/javascript">
+        Materialize.toast('<%= message %>', 4000, '<% if message_type == "success" %>green<% else %>red<% end %>');
+      </script>
+    <% end %>
+
 
     <%= yield %>
   </body>
 
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 </html>

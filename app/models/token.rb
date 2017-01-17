@@ -1,6 +1,7 @@
 class Token < ApplicationRecord
   belongs_to :rule
   self.inheritance_column = :_type_disabled
+  validates :token, presence: true, length: { maximum: 50 }
 
   def check(person)
     if token.nil? || token == ""

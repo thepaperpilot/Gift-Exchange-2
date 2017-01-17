@@ -128,7 +128,7 @@ class GroupController < ApplicationController
 
   private
 
-  def group_params
-    params.require(:group).permit(:name, :password, :instructions, :open, :public)
-  end
+    def group_params
+      params.require(:group).permit(:name, :password, :instructions, :open, :public)
+    end
 end

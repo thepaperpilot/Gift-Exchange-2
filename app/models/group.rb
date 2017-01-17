@@ -2,10 +2,7 @@ class Group < ApplicationRecord
   has_many :people, dependent: :destroy
   has_many :rules, dependent: :destroy
   validates :name, presence: true, length: { maximum: 50 }
-  validates :instructions, presence: true
-
-  has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :instructions, presence: true, length: { maximum: 1000 }
 
   before_create :randomize_id
 

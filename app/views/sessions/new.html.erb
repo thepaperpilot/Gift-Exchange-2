@@ -1,0 +1,21 @@
+<% @title="Log In" %>
+
+<div class="card">
+	<div class="card-content">
+		<%= form_for(:session, url: login_path) do |f| %>
+			<div class="input-field">
+	     		<%= f.label :email %>
+	     		<%= f.email_field :email %>
+	     	</div>
+
+	     	<div class="input-field">
+	     		<%= f.label :password %>
+	     		<%= f.password_field :password %>
+	     	</div>
+
+	     	<%= f.submit "Log In", class: "btn btn-primary" %>
+	     <% end %>
+	</div>
+</div>
+
+<p>New User? <%= link_to "Sign up now!", signup_path %></p>

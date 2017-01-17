@@ -30,7 +30,7 @@ class RulesController < ApplicationController
 
   private
 
-  def rule_params
-    params.require(:rule).permit(:name, :source_match_all, :whitelist_match_all)
-  end
+    def rule_params
+      params.require(:rule).permit(:name, :source_match_all, :whitelist_match_all)
+    end
 end

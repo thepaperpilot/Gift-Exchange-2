@@ -36,11 +36,11 @@ class PeopleController < ApplicationController
 
   private
 
-  def person_params
-    params.require(:person).permit(:name, :family, :participating)
-  end
+    def person_params
+      params.require(:person).permit(:name, :family, :participating)
+    end
 
-  def person_params_restricted
-    params.require(:person).permit(:name)
-  end
+    def person_params_restricted
+      params.require(:person).permit(:name)
+    end
 end

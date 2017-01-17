@@ -1,6 +1,7 @@
 class Rule < ApplicationRecord
   belongs_to :group
   has_many :tokens
+  validates :name, presence: true, length: { maximum: 50 }
 
   def check_source(person)
     sources = tokens.select {|a| a.type == "source" }

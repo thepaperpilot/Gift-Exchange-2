@@ -36,7 +36,6 @@ body {
 .head {
     background: #ccc;
     background: linear-gradient(to bottom right, teal, turquoise);
-    padding: 20px;
     padding-bottom: 40px;
     margin-bottom: -50px;
     text-align: center;
@@ -117,4 +116,12 @@ body > .collapsible, body > .collection, body > .card {
 [type="checkbox"] + label {
     margin-right: 35px;
     line-height: unset !important;
+}
+
+body p {
+    width: 90% !important;
+    max-width: 940px !important;
+    margin: auto !important;
+    margin-bottom: 20px !important;
+    margin-top: 20px !important;
 }
