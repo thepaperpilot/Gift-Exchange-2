@@ -1,20 +1,16 @@
 <% @title=@group.name %>
 
 <div class="card">
-  <div class="card-content">
-    <ul class="inline">
-      <li><%= link_to 'Logout', group_path(@group) %></li>
-      <li><%= link_to 'Delete', group_path(@group, password: @password),
+  <div class="card-action">
+      <%= link_to 'Delete', group_path(@group),
                 method: :delete,
-                data: { confirm: 'Are you sure?' },
-                password: @password %></li>
-      <li><%= link_to 'Draw Names', generate_path(@group, password: @password), 
+                data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Draw Names', generate_path(@group), 
                 method: :post,
-                remote: true %></li>
-      <li><%= link_to 'Clear', clear_path(@group, password: @password), 
+                remote: true %>
+      <%= link_to 'Clear', clear_path(@group), 
                 method: :post,
-                remote: true %></li>
-    </ul>
+                remote: true %>
   </div>
 </div>
 
@@ -25,7 +21,6 @@
   <div class="card-content">
     <span class="card-title">Edit Group</span><br>
     <%= form_for @group, remote: true do |f| %>
-      <%= f.hidden_field :password, :value => @password %>
       <div class="input-field">
         <%= f.label :name %>
         <%= f.text_field :name %>
@@ -46,14 +41,15 @@
 
 <ul id="people" class="collapsible" data-collapsible="accordion">
   <li class="collapsible-title"><div class="collapsible-header"><span>Participants</span></div></li>
-  <li class="person">
-    <div class="collapsible-header"><i class="material-icons">mode_edit</i>Add Person</div>
+  <li class="person" id="join_group_admin">
+    <% if @group.people.none?{|person|person.user_id==current_user.id} %>
+      <div class="collapsible-header"><i class="material-icons">mode_edit</i>Join Group</div>
       <div class="collapsible-body">
         <%= form_for [@group, Person.new], remote: true do |f| %>
-          <%= f.hidden_field :password, :value => @password %>
+          <%= f.hidden_field :user_id, value: current_user.id %>
           <div class="input-field">
             <%= f.label :name %>
-            <%= f.text_field :name %>
+            <%= f.text_field :name, value: current_user.name %>
           </div>
           <div class="input-field">
             <%= f.label :family, "Class" %>
@@ -61,12 +57,31 @@
           </div>
           <%= f.label :participating %>
           <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Off <%= f.check_box :participating %><span class="lever"></span> On</label></div>
-          <%= f.submit class: "btn-flat waves-effect waves-light" %>
+          <%= f.submit "Join Group", class: "btn-flat waves-effect waves-light" %>
         <% end %>
+      </div>
+    <% end %>
+  </li>
+  <li class="person">
+    <div class="collapsible-header"><i class="material-icons">mode_edit</i>Add Person</div>
+    <div class="collapsible-body">
+      <%= form_for [@group, Person.new], remote: true do |f| %>
+        <div class="input-field">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
+        </div>
+        <div class="input-field">
+          <%= f.label :family, "Class" %>
+          <%= f.text_field :family %>
+        </div>
+        <%= f.label :participating %>
+        <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Off <%= f.check_box :participating %><span class="lever"></span> On</label></div>
+        <%= f.submit class: "btn-flat waves-effect waves-light" %>
+      <% end %>
     </div>
   </li>
   <% @group.people.order('created_at').each do |person| %>
-    <%= render 'people/admin', person: person %>
+    <%= render person %>
   <% end %>
 </ul>
 
@@ -79,7 +94,6 @@
     <div class="collapsible-header"><i class="material-icons">mode_edit</i>Add Rule</div>
     <div class="collapsible-body">
       <%= form_for [@group, Rule.new], remote: true do |f| %>
-        <%= f.hidden_field :password, :value => @password %>
         <div class="input-field">
           <%= f.label :name %>
           <%= f.text_field :name, value: "" %>

@@ -2,14 +2,9 @@ class PeopleController < ApplicationController
   def create
     @group = Group.find_by(code: params[:group_code])
 
-    if @group.authenticate(params[:person][:password])
+    if current_user && current_user.id == @group.user_id
       @person = @group.people.create(person_params)
-      
-      @password = params[:person][:password]
-      respond_to do |format|
-        format.js { render file: 'people/admin.js.erb' }
-      end
-    elsif @group.open?
+    elsif @group.open? && current_user && @group.people.none?{|person| person.user_id==current_user.id}
       @person = @group.people.create(person_params_restricted)
     end
   end
@@ -17,7 +12,7 @@ class PeopleController < ApplicationController
   def update
     @group = Group.find_by(code: params[:group_code])
 
-    if @group && @group.authenticate(params[:person][:password])
+    if current_user && (current_user.id == @group.user_id || @group.people.any?{|person|person.user_id==current_user.id})
       @person = @group.people.find(params[:id])
 
       @person.update(person_params) if @person
@@ -27,7 +22,7 @@ class PeopleController < ApplicationController
   def destroy
     @group = Group.find_by(code: params[:group_code])
 
-    if @group && @group.authenticate(params[:password])
+    if current_user && (current_user.id == @group.user_id || @group.people.any?{|person|person.user_id==current_user.id})
       @person = @group.people.find(params[:id])
 
       @person.destroy if @person
@@ -37,10 +32,10 @@ class PeopleController < ApplicationController
   private
 
     def person_params
-      params.require(:person).permit(:name, :family, :participating)
+      params.require(:person).permit(:name, :family, :participating, :user_id)
     end
 
     def person_params_restricted
-      params.require(:person).permit(:name)
+      params.require(:person).permit(:name, :user_id)
     end
 end

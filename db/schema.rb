@@ -18,8 +18,10 @@ ActiveRecord::Schema.define(version: 20170116215027) do
     t.string   "instructions", default: "To join the group, type your name in the form below and click 'Join Group'. After the gift exchanges are generated you'll be able to look up who you are giving to and receiving from through this link. You can also share this link with others so they can join the group as well."
     t.boolean  "open",         default: true
     t.boolean  "public",       default: true
+    t.integer  "user_id"
     t.datetime "created_at",                                                                                                                                                                                                                                                                                                     null: false
     t.datetime "updated_at",                                                                                                                                                                                                                                                                                                     null: false
+    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "people", force: :cascade do |t|
@@ -28,6 +30,7 @@ ActiveRecord::Schema.define(version: 20170116215027) do
     t.boolean  "participating",  default: true
     t.integer  "giving_to"
     t.integer  "receiving_from"
+    t.integer  "user_id"
     t.integer  "group_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
@@ -64,8 +67,10 @@ ActiveRecord::Schema.define(version: 20170116215027) do
     t.string   "name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "interests"
+    t.boolean  "public_avatar",   default: true
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
 end

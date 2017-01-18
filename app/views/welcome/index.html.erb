@@ -21,6 +21,4 @@
   </div>
 </div>
 
-<% if logged_in? %>
-  <%= render 'welcome/form' %>
-<% end %>
+<p>To create a group <%= link_to "register", signup_path %> or <%= link_to "login", login_path %></p>

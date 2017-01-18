@@ -10,7 +10,11 @@
 <div id="error_explanation" class="card" style="color: red;">
 </div>
 
-<%= render 'people/form' %>
+<div class="card">
+  <div class="card-content" id="join_group">
+    <%= render 'people/form' %>
+  </div>
+</div>
 
 <% if @group.public? %>
   <ul id="people" class="collapsible" data-collapsible="accordion">
@@ -23,23 +27,3 @@
     <%= render @group.people %>
   </ul>
 <% end %>
-
-<% if not @auth %>
-  <div id="error_explanation" class="card" style="color: red;">
-    <ul class="collection with-header">
-      <li class="collection-item"><h4>Incorrect Password</h4></li>
-     </ul>
-  </div>
-<% end %>
-
-<div class="card">
-  <div class="card-content">
-    <%= form_tag(controller: "group", action: "admin") do %>
-      <div class="input-field">
-        <%= label_tag :password, "Admin Password" %>
-        <%= password_field_tag :password %>
-      </div>
-      <%= submit_tag "login", class: "btn-flat waves-effect waves-light" %>
-    <% end %>
-  </div>
-</div>

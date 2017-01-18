@@ -1,4 +1,5 @@
 class Group < ApplicationRecord
+  belongs_to :user
   has_many :people, dependent: :destroy
   has_many :rules, dependent: :destroy
   validates :name, presence: true, length: { maximum: 50 }

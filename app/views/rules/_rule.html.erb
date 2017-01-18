@@ -3,7 +3,6 @@
     <div class="collapsible-header"><i class="material-icons">subject</i><%= rule.name %></div>
     <div class="collapsible-body">
       <%= form_for [@group, rule], remote: true do |f| %>
-        <%= f.hidden_field :password, :value => @password %>
         <div class="input-field">
           <%= f.label :name %>
           <%= f.text_field :name %>
@@ -34,7 +33,7 @@
           <% end %>
         </div>
         <%= f.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
-        <%= link_to "Delete", group_rule_path(@group, rule, password: @password), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_rule", style: "float: right;margin-top: 2rem;" %>
+        <%= link_to "Delete", group_rule_path(@group, rule), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_rule", style: "float: right;margin-top: 2rem;" %>
       <% end %>
     </div>
   </li>
@@ -45,7 +44,6 @@
         <div id="error_explanation_<%= rule.id %>_source" class="card" style="color: red;"></div>
         <h4>Source</h4>
         <%= form_for [@group, rule, Token.new], remote: true do |t| %>
-          <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "source" %>
           <div class="input-field">
             <%= t.label :token, "Filter" %>
@@ -74,7 +72,6 @@
         <div id="error_explanation_<%= rule.id %>_whitelist" class="card" style="color: red;"></div>
         <h4>Whitelist</h4>
         <%= form_for [@group, rule, Token.new], remote: true do |t| %>
-          <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "whitelist" %>
           <div class="input-field">
             <%= t.label :token, "Filter" %>
@@ -103,7 +100,6 @@
         <div id="error_explanation_<%= rule.id %>_blacklist" class="card" style="color: red;"></div>
         <h4>Blacklist</h4>
         <%= form_for [@group, rule, Token.new], remote: true do |t| %>
-          <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "blacklist" %>
           <div class="input-field">
             <%= t.label :token, "Filter" %>

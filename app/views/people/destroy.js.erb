@@ -1,1 +1,7 @@
-$("#person_<%= @person.id %>").parent().remove();
+$("#person_<%= @person.id %>").remove();
+<% if @person.user_id && @person.user_id == @group.user.id %>
+	$("#join_group_admin").html('<div class="collapsible-header"><i class="material-icons">mode_edit</i>Join Group</div><div class="collapsible-body"><%= form_for [@group, Person.new], remote: true do |f| %><%= f.hidden_field :user_id, value: current_user.id %><div class="input-field"><%= f.label :name %><%= f.text_field :name, value: current_user.name %></div><div class="input-field"><%= f.label :family, "Class" %><%= f.text_field :family %></div><%= f.label :participating %><div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Off <%= f.check_box :participating %><span class="lever"></span> On</label></div><%= f.submit "Join Group", class: "btn-flat waves-effect waves-light" %><% end %></div>');
+<% else %>
+	$("#join_group").html('<span class="card-title">Join Group</span><br><% if @group.open? %><%= form_for [@group, @group.people.build], remote: true do |f| %><%= f.hidden_field :user_id, value: current_user.id %><div class="input-field"><%= f.label :name %><%= f.text_field :name, value: current_user.name %></div><%= f.submit "Join Group", class: "btn-flat waves-effect waves-light" %><% end %><% else %><h5>Submissions Closed</h5><% end %>');
+<% end %>
+Materialize.updateTextFields();

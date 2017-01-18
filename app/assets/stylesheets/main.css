@@ -90,6 +90,16 @@ body > .collapsible, body > .collection, body > .card {
     cursor: default;
 }
 
+.collapsible-header img {
+    width: 2rem;
+    font-size: 1.6rem;
+    line-height: 3rem;
+    display: block;
+    float: left;
+    text-align: center;
+    margin-right: 1rem;
+}
+
 .collection-header {
     padding: 0 1rem !important;
 }
@@ -102,7 +112,11 @@ body > .collapsible, body > .collection, body > .card {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.collection-item i {
+.collection-item {
+    padding-left: 1rem !important;
+}
+
+.collection-item i, .collection-item img {
     width: 2rem;
     font-size: 1.6rem;
     line-height: 3rem;
@@ -113,15 +127,43 @@ body > .collapsible, body > .collection, body > .card {
     margin-top: -10px;
 }
 
+.collection-item img, .collapsible-header img {
+    position: relative;
+    top: 6px;
+}
+
 [type="checkbox"] + label {
     margin-right: 35px;
     line-height: unset !important;
 }
 
-body p {
-    width: 90% !important;
-    max-width: 940px !important;
+body > p {
+    width: 85% !important;
+    max-width: 920px !important;
     margin: auto !important;
     margin-bottom: 20px !important;
     margin-top: 20px !important;
+}
+
+.card .card-content p {
+    margin: 15px 0;
+}
+
+.card .card-content p:first-child {
+    margin-top: 0;
+}
+
+.card .card-content p:last-child {
+    margin-bottom: 0;
+}
+
+.card .card-content .card-title ~ p {
+    margin-top: 0;
+}
+
+.head i, .head img {
+    font-size: 80px !important;
+    position: relative !important;
+    top: 16px !important;
+    width: 80px !important;
 }

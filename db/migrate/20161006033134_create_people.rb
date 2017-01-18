@@ -6,6 +6,7 @@ class CreatePeople < ActiveRecord::Migration[5.0]
       t.boolean :participating, default: true
       t.integer :giving_to
       t.integer :receiving_from
+      t.integer :user_id
       t.references :group, foreign_key: true
 
       t.timestamps

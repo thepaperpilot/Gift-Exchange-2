@@ -1,16 +1,43 @@
-<div class="card">
-  <div class="card-content">
+<% if logged_in? %>
+  <% if not @group.people.any?{|person| person.user_id == current_user.id} %>
     <span class="card-title">Join Group</span><br>
     <% if @group.open? %>
       <%= form_for [@group, @group.people.build], remote: true do |f| %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
         <div class="input-field">
           <%= f.label :name %>
-          <%= f.text_field :name %>
+          <%= f.text_field :name, value: current_user.name %>
         </div>
         <%= f.submit "Join Group", class: "btn-flat waves-effect waves-light" %>
       <% end %>
     <% else %>
       <h5>Submissions Closed</h5>
     <% end %>
-  </div>
-</div>
+  <% else %>
+    <% person=@group.people.select{|person|person.user_id==current_user.id}.first %>
+    <span class="card-title"><%= person.name %></span><br>
+    <%= form_for [@group, person], remote: true do |f| %>
+      <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
+        Sending to: 
+        <p style="display: inline;">
+          <%= Person.find(person.giving_to).name %>
+        </p><br>
+      <% end %>
+      <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+        Receiving from: 
+        <p style="display: inline;">
+          <%= Person.find(person.receiving_from).name %>
+        </p><br><br>
+      <% end %>
+      <div class="input-field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <%= f.submit class: "btn-flat waves-effect waves-light" %>
+      <%= link_to "Leave Group", group_person_path(@group, person), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_person", style: "float: right;" %>
+    <% end %>
+  <% end %>
+<% else %>
+  <span class="card-title">Join Group</span><br>
+  <p>Before you can join, you need to either <%= link_to "register", signup_path %> or <%= link_to "login", login_path %></p>
+<% end %>

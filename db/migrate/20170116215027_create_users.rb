@@ -4,6 +4,8 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :name
       t.string :email
       t.string :password_digest
+      t.string :interests
+      t.boolean :public_avatar, default: true
 
       t.timestamps
     end

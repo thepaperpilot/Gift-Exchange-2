@@ -1,5 +1,5 @@
 <% Person.where(group_id: @group.id).each do |person| %>
-$("#person_<%= person.id %>_sending_header").text("<% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %> ⇒ <%= Person.find(person.giving_to).name %><% end %>");
-$("#person_<%= person.id %>_sending").text("<% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %><%= Person.find(person.giving_to).name %><% end %>");
-$("#person_<%= person.id %>_receiving").text("<% if not person.receiving_from.nil? and not Person.find(person.receiving_from).nil? %><%= Person.find(person.receiving_from).name %><% end %>");
+$("#person_<%= person.id %>_sending_header").text("<% if not person.giving_to.nil? and Person.exists?(person.giving_to) %> ⇒ <%= Person.find(person.giving_to).name %><% end %>");
+$("#person_<%= person.id %>_sending").text("<% if not person.giving_to.nil? and Person.exists?(person.giving_to) %><%= Person.find(person.giving_to).name %><% end %>");
+$("#person_<%= person.id %>_receiving").text("<% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %><%= Person.find(person.receiving_from).name %><% end %>");
 <% end %>

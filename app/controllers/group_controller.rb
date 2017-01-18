@@ -4,6 +4,12 @@ class GroupController < ApplicationController
     @auth = true
 
     redirect_to root_path unless @group
+
+    if current_user && current_user.id == @group.user_id
+      render 'group/admin'
+    else
+      render 'group/show'
+    end
   end
 
   def search
@@ -18,23 +24,10 @@ class GroupController < ApplicationController
     end
   end
 
-  def admin
-    @group = Group.find_by(code: params[:code])
-    @auth = false
-
-    if @group && @group.authenticate(params[:password])
-      @auth = true
-      @password = params[:password]
-      render 'group/admin'
-    else
-      render 'group/show'
-    end
-  end
-
   def randomize
     @group = Group.find_by(code: params[:code])
 
-    return unless @group && @group.authenticate(params[:password])
+    return unless @group && current_user && current_user.id == @group.user_id
 
     people = Person.where(group_id: @group.id)
 
@@ -94,26 +87,46 @@ class GroupController < ApplicationController
   def clear
     @group = Group.find_by(code: params[:code])
 
-    return unless @group && @group.authenticate(params[:password])
+    return unless @group && current_user && current_user.id == @group.user_id
 
     @group.people.each { |p| p.giving_to = p.receiving_from = nil }
     @group.people.each(&:save)
   end
 
-  def create
-    @group = Group.new(group_params)
+  def duplicate
+    if not Group.find_by(code: params[:code])
+      return
+    end
+
+    @group = Group.find_by(code: params[:code]).dup
 
     if @group.save
-      redirect_to admin_path(@group)
+      redirect_to group_path(@group)
     else
-      render 'welcome/index'
+      render 'users/show'
+    end
+  end
+
+  def create
+    if not logged_in?
+      redirect_to root_path
+      return
+    end
+
+    @user = current_user
+    @group = @user.groups.build(group_params)
+
+    if @group.save
+      redirect_to group_path(@group)
+    else
+      render 'users/show'
     end
   end
 
   def update
     @group = Group.find_by(code: params[:code])
 
-    if @group && @group.authenticate(params[:group][:password])
+    if @group && current_user && current_user.id == @group.user_id
       @group.update(group_params)
     end
   end
@@ -121,14 +134,15 @@ class GroupController < ApplicationController
   def destroy
     @group = Group.find_by(code: params[:code])
 
-    @group.destroy if @group && @group.authenticate(params[:password])
-
-    redirect_to root_path
+    if @group && current_user && current_user.id == @group.user_id
+      @group.destroy 
+      redirect_to current_user
+    end
   end
 
   private
 
     def group_params
-      params.require(:group).permit(:name, :password, :instructions, :open, :public)
+      params.require(:group).permit(:name, :instructions, :open, :public)
     end
 end

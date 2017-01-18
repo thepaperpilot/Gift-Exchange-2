@@ -2,8 +2,7 @@ class TokensController < ApplicationController
   def create
     @group = Group.find_by(code: params[:group_code])
 
-    if @group.authenticate(params[:token][:password])
-      @password = params[:token][:password]
+    if current_user && current_user.id == @group.user_id
       @rule = Rule.find(params[:rule_id])
       @token = @rule.tokens.create(token_params)
 
@@ -23,7 +22,7 @@ class TokensController < ApplicationController
   def update
     @group = Group.find_by(code: params[:group_code])
 
-    if @group && @group.authenticate(params[:token][:password])
+    if current_user && current_user.id == @group.user_id
       @rule = Rule.find(params[:rule_id])
       @token = @rule.tokens.find(params[:id])
       @token.update(token_params) if @token
@@ -33,7 +32,7 @@ class TokensController < ApplicationController
   def destroy
     @group = Group.find_by(code: params[:group_code])
 
-    if @group && @group.authenticate(params[:password])
+    if current_user && current_user.id == @group.user_id
       @rule = Rule.find(params[:rule_id])
       @token = @rule.tokens.find(params[:id])
 

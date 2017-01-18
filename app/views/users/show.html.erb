@@ -1,8 +1,95 @@
 <% @title=@user.name %>
-<% @icon=gravatar_for(@user) %>
+<% if @user.public_avatar %>
+    <% @icon=gravatar_for(@user) %>
+<% else %>
+    <% @icon='<i class="material-icons">face</i>'.html_safe %>
+<% end %>
 
-<div class="card">
-  <div class="card-content">
-    	test
-  </div>
-</div>
+<% if current_user == @user %>
+    <div id="error_explanation" class="card" style="color: red;">
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Edit User</span><br>
+        <%= form_for @user, remote: true do |f| %>
+          <div class="input-field">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+          <div class="input-field">
+            <%= f.label :interests %>
+            <%= f.text_area :interests, class: "materialize-textarea", style: "padding-bottom: 12px;" %>
+          </div>
+          <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;"><label>Show default avatar <%= f.check_box :public_avatar %><span class="lever"></span> Use gravatar avatar</label></div>
+          <p class="right">Change avatar on <%= link_to "gravatar.com", "http://gravatar.com" %></p>
+          <%= f.submit class: "btn-flat waves-effect waves-light" %>
+        <% end %>
+      </div>
+    </div>
+
+	<%= render 'group/form' %>
+
+	<% @user.groups.each do |group| %>
+  	<div class="card">
+  		<div class="card-content">
+  			<span class="card-title"><%= group.name %><div class="chip secondary-content">owner</div></span>
+        <% if group.people.any?{|person|person.user_id==current_user.id} %>
+          <% person = group.people.select{|person|person.user_id==current_user.id}.first %>
+          <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
+            Sending to: 
+            <p style="display: inline;">
+              <%= Person.find(person.giving_to).name %>
+            </p><br>
+          <% end %>
+          <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+            Receiving from: 
+            <p style="display: inline;">
+              <%= Person.find(person.receiving_from).name %>
+            </p><br>
+          <% end %>
+        <% end %>
+		  </div>
+		  <div class="card-action">
+			  <%= link_to "Open", group_path(group) %>
+			  <%= link_to 'Delete', group_path(group),
+            	method: :delete,
+            	data: { confirm: 'Are you sure?' } %>
+  			<%= link_to 'Duplicate', duplicate_path(group), 
+            	method: :post,
+            	remote: true %>
+		  </div>
+	  </div>
+  <% end %>
+
+  <% Group.all.select{|group| group.people.any?{|person|person.user_id==current_user.id}}.each do |group| %>
+    <% person = group.people.select{|person|person.user_id==current_user.id}.first %>
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title"><%= group.name %></span>
+        <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
+          <br>Sending to: 
+          <p style="display: inline;">
+            <%= Person.find(person.giving_to).name %>
+          </p>
+        <% end %>
+        <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+          <br>Receiving from: 
+          <p style="display: inline;">
+            <%= Person.find(person.receiving_from).name %>
+          </p>
+        <% end %>
+      </div>
+      <div class="card-action">
+        <%= link_to "Open", group_path(group) %>
+      </div>
+    </div>
+  <% end %>
+<% elsif not @user.interests.nil? %>
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Interests</span><br>
+            <%= @user.interests %>
+        </div>
+    </div>
+<% end %>

@@ -4,7 +4,6 @@
         <div id="error_explanation_<%= rule.id %>_<%= token.id %>" class="card" style="color: red;"></div>
         <h4>Source</h4>
         <%= form_for [@group, rule, token], remote: true do |t| %>
-          <%= t.hidden_field :password, :value => @password %>
           <%= t.hidden_field :type, value: "source" %>
           <div class="input-field">
             <%= t.label :token, "Filter" %>
@@ -21,7 +20,7 @@
           <%= t.check_box :invert, id: "invert_#{token.id}", class: "filled-in" %>
           <%= t.label :invert, for: "invert_#{token.id}" %><br>
           <%= t.submit class: "btn-flat waves-effect waves-light", style: "margin-top: 2rem;" %>
-          <%= link_to "Delete", group_rule_token_path(@group, rule, token, password: @password), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_token", style: "float: right;margin-top: 2rem;" %>
+          <%= link_to "Delete", group_rule_token_path(@group, rule, token), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_token", style: "float: right;margin-top: 2rem;" %>
         <% end %>
       </div>
     </div>

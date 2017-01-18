@@ -1,13 +1,85 @@
 <% if not person.id.nil? %>
-  <% if @group.public? %>
-    <li>
-      <div class="collapsible-header"><i class="material-icons">face</i><%= person.name %><p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? and @group.public? %> ⇒ <%= Person.find(person.giving_to).name %><% end %></p></div>
+  <% if current_user && current_user.id == @group.user_id %>
+    <li class="person" id="person_<%= person.id %>">
+      <div class="collapsible-header">
+        <% if person.user_id && User.exists?(person.user_id) && User.find(person.user_id).public_avatar %>
+          <%= gravatar_for(User.find(person.user_id)) %>
+        <% else %>
+          <i class="material-icons">face</i>
+        <% end %>
+        <%= person.name %>
+        <p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;">
+          <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %> ⇒ <%= Person.find(person.giving_to).name %>
+          <% end %>
+        </p>
+      </div>
       <div class="collapsible-body">
-        Sending to: <p id="person_<%= person.id %>_sending" style="display: inline;"><% if not person.giving_to.nil? and not Person.find(person.giving_to).nil? %><%= Person.find(person.giving_to).name %><% end %></p><br>
-        Receiving from: <p id="person_<%= person.id %>_receiving" style="display: inline;"><% if not person.receiving_from.nil? and not Person.find(person.receiving_from).nil? %><%= Person.find(person.receiving_from).name %><% end %></p>
+        <%= form_for [@group, person], remote: true do |f| %>
+          Sending to: 
+          <p id="person_<%= person.id %>_sending" style="display: inline;">
+            <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
+              <%= Person.find(person.giving_to).name %>
+            <% end %>
+          </p><br>
+          Receiving from: 
+          <p id="person_<%= person.id %>_receiving" style="display: inline;">
+            <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+              <%= Person.find(person.receiving_from).name %>
+            <% end %>
+          </p><br><br>
+          <div class="input-field">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+          <div class="input-field">
+            <%= f.label :family, "Class" %>
+            <%= f.text_field :family %>
+          </div>
+          <%= f.label :participating %>
+          <div class="switch" style="margin-bottom: 2rem;margin-top: 1rem;">
+            <label>Off <%= f.check_box :participating %><span class="lever"></span> On</label>
+          </div>
+          <%= f.submit class: "btn-flat waves-effect waves-light" %>
+          <%= link_to "Delete", group_person_path(@group, person), method: :delete, remote: true, data: { confirm: "Are you sure?" }, class: "btn-flat waves-effect waves-light delete_person", style: "float: right;" %>
+        <% end %>
+      </div>
+    </li>
+  <% elsif @group.public? %>
+    <li class="person" id="person_<%= person.id %>">
+      <div class="collapsible-header">
+        <% if person.user_id && User.exists?(person.user_id) && User.find(person.user_id).public_avatar %>
+          <%= gravatar_for(User.find(person.user_id)) %>
+        <% else %>
+          <i class="material-icons">face</i>
+        <% end %>
+        <%= person.name %>
+        <p id="person_<%= person.id %>_sending_header" style="display: inline;color: grey;">
+        <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %> ⇒ <%= Person.find(person.giving_to).name %>
+        <% end %></p>
+      </div>
+      <div class="collapsible-body">
+        Sending to: 
+        <p id="person_<%= person.id %>_sending" style="display: inline;">
+          <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
+            <%= Person.find(person.giving_to).name %>
+          <% end %>
+        </p><br>
+        Receiving from: 
+        <p id="person_<%= person.id %>_receiving" style="display: inline;">
+          <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+            <%= Person.find(person.receiving_from).name %>
+          <% end %>
+        </p>
       </div>
     </li>
   <% else %>
-    <li class="collection-item"><%= person.name %></li>
+    <li id="person_<%= person.id %>_sending_header" class="collection-item" id="person_<%= person.id %>">
+      <% if person.user_id && User.exists?(person.user_id) && User.find(person.user_id).public_avatar %>
+        <%= gravatar_for(User.find(person.user_id)) %>
+      <% else %>
+        <i class="material-icons">face</i>
+      <% end %>
+      <%= person.name %>
+    </li>
   <% end %>
 <% end %>
