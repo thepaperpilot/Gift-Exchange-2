@@ -83,6 +83,10 @@ body > .collapsible, body > .collection, body > .card {
     padding: 2rem;
 }
 
+.collapsible-body p {
+    padding: unset !important;
+}
+
 .collapsible-title span, .collection-header {
     line-height: 48px;
     font-size: 24px;

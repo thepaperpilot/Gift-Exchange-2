@@ -20,15 +20,26 @@
       <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
         Sending to: 
         <p style="display: inline;">
-          <%= Person.find(person.giving_to).name %>
+          <% giving =  Person.find(person.giving_to) %>
+          <% if giving.user_id and User.exists?(giving.user_id) %>
+            <%= link_to giving.name, User.find(giving.user_id) %>
+          <% else %>
+            <%= giving.name %>
+          <% end %>
         </p><br>
       <% end %>
-      <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
+      <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) and @group.public? %>
         Receiving from: 
         <p style="display: inline;">
-          <%= Person.find(person.receiving_from).name %>
-        </p><br><br>
+          <% receiving =  Person.find(person.receiving_from) %>
+          <% if receiving.user_id and User.exists?(receiving.user_id) %>
+            <%= link_to receiving.name, User.find(receiving.user_id) %>
+          <% else %>
+            <%= receiving.name %>
+          <% end %>
+        </p><br>
       <% end %>
+      <br>
       <div class="input-field">
         <%= f.label :name %>
         <%= f.text_field :name %>

@@ -18,13 +18,23 @@
           Sending to: 
           <p id="person_<%= person.id %>_sending" style="display: inline;">
             <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
-              <%= Person.find(person.giving_to).name %>
+              <% giving =  Person.find(person.giving_to) %>
+              <% if giving.user_id and User.exists?(giving.user_id) %>
+                <%= link_to giving.name, User.find(giving.user_id) %>
+              <% else %>
+                <%= giving.name %>
+              <% end %>
             <% end %>
           </p><br>
           Receiving from: 
           <p id="person_<%= person.id %>_receiving" style="display: inline;">
             <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
-              <%= Person.find(person.receiving_from).name %>
+              <% receiving =  Person.find(person.receiving_from) %>
+              <% if receiving.user_id and User.exists?(receiving.user_id) %>
+                <%= link_to receiving.name, User.find(receiving.user_id) %>
+              <% else %>
+                <%= receiving.name %>
+              <% end %>
             <% end %>
           </p><br><br>
           <div class="input-field">
@@ -61,13 +71,23 @@
         Sending to: 
         <p id="person_<%= person.id %>_sending" style="display: inline;">
           <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
-            <%= Person.find(person.giving_to).name %>
+            <% giving =  Person.find(person.giving_to) %>
+            <% if giving.user_id and User.exists?(giving.user_id) %>
+              <%= link_to giving.name, User.find(giving.user_id) %>
+            <% else %>
+              <%= giving.name %>
+            <% end %>
           <% end %>
         </p><br>
         Receiving from: 
         <p id="person_<%= person.id %>_receiving" style="display: inline;">
           <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
-            <%= Person.find(person.receiving_from).name %>
+            <% receiving =  Person.find(person.receiving_from) %>
+            <% if receiving.user_id and User.exists?(receiving.user_id) %>
+              <%= link_to receiving.name, User.find(receiving.user_id) %>
+            <% else %>
+              <%= receiving.name %>
+            <% end %>
           <% end %>
         </p>
       </div>

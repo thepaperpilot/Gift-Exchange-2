@@ -4,11 +4,9 @@
     <title><%= @title %></title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
@@ -41,6 +39,16 @@
 
 
     <%= yield %>
+
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $('.collapsible').collapsible();
+      $('.modal-trigger').leanModal();
+      Materialize.updateTextFields();
+    });
+    </script>
   </body>
 
 </html>
