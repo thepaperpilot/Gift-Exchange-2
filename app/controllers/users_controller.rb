@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter :store_target_location, :except => :show
 
   def show
   	@user = User.find(params[:id])
@@ -15,8 +16,8 @@ class UsersController < ApplicationController
   	@user = User.new(user_params)
   	if @user.save
       log_in @user
-      flash[:success] = "Welcome to Name Draw!"
-      redirect_to @user
+      flash[:success] = "Welcome to Name Draw! You are now logged in."
+      redirect_to_target_or_default(@user)
     else
   		render 'new'
   	end
