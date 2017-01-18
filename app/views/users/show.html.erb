@@ -37,16 +37,16 @@
         <% if group.people.any?{|person|person.user_id==current_user.id} %>
           <% person = group.people.select{|person|person.user_id==current_user.id}.first %>
           <% if not person.giving_to.nil? and Person.exists?(person.giving_to) %>
-            Sending to: 
+            <br>Sending to: 
             <p style="display: inline;">
               <%= Person.find(person.giving_to).name %>
-            </p><br>
+            </p>
           <% end %>
           <% if not person.receiving_from.nil? and Person.exists?(person.receiving_from) %>
-            Receiving from: 
+            <br>Receiving from: 
             <p style="display: inline;">
               <%= Person.find(person.receiving_from).name %>
-            </p><br>
+            </p>
           <% end %>
         <% end %>
 		  </div>
@@ -62,7 +62,7 @@
 	  </div>
   <% end %>
 
-  <% Group.all.select{|group| group.people.any?{|person|person.user_id==current_user.id}}.each do |group| %>
+  <% Group.all.select{|group| group.people.any?{|person|person.user_id==current_user.id and not @user.groups.include?(group)}}.each do |group| %>
     <% person = group.people.select{|person|person.user_id==current_user.id}.first %>
     <div class="card">
       <div class="card-content">
